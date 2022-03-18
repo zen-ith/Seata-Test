@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.ItemInfoMapper">
+    <select id="getList" resultType="com.demo.entity.ItemInfo">
+        select *
+        from item_info
+    </select>
+    <update id="addLimitStock" parameterType="com.demo.entity.ItemInfo">
+        update item_info
+        set stock       = stock - #{stock},
+            stock_limit = stock_limit + #{stock},
+            price       = #{price}
+        where id = #{id}
+          and stock >= #{stock}
+    </update>
+    <update id="updateStock" parameterType="com.demo.entity.ItemInfo">
+        update item_info
+        set stock = stock - #{stock}
+        where id = #{id}
+          and stock >= #{stock}
+    </update>
+    <update id="updateLimitStock" parameterType="com.demo.entity.ItemInfo">
+        update item_info
+        set stock_limit = stock_limit - #{stock}
+        where id = #{id}
+          and stock_limit >= #{stock}
+    </update>
+</mapper>

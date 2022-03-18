@@ -1,0 +1,57 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true # 解决bean重复定义
+  redis:
+    database: 0 #redis数据库编号，存在0~15共16个数据库
+    host: 127.0.0.1 #redis服务器IP
+    port: 6379 #redis端口号
+    password: root #redis密码
+    timeout: 10000ms #redis请求超时时间，超过此值redis自动断开连接
+    jedis: 
+      pool: 
+        max-active: 32 #jedis最大连接数，超过此值则提示获取不到连接异常
+        max-wait: 10000ms #jedis最大等待时间，超过此值会提示连接超时异常
+        max-idle: 32 #jedis最大等待连接数
+        min-idle: 0 #jedis最小等待连接数
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener: 
+      simple: 
+        acknowledge-mode: manual # 开启消费者手动确认
+feign:
+  sentinel:
+    enabled: true # 开启feign下的sentinel功能
+  client:
+    config:
+      default:
+        connectTimeout: 5000 # default context 连接超时时间
+        readTimeout: 10000 # default context 读超时时间
+
+seata:
+  enabled: true
+  application-id: seata-server
+  tx-service-group: seata_test_tx_group
+  enable-auto-data-source-proxy: true
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      #namespace: 17b0a072-d6de-4539-829b-d36c8c122c21
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      #namespace: 17b0a072-d6de-4539-829b-d36c8c122c21
+
+QUEUES_RETRY_COUNT: 3
